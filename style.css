@@ -1,23 +1,15 @@
+body,
+html,
+main,
+main > div{
+    height: 100% !important;
+    width: 100% !important;
+}
+
 span {
     font-size: 3em;
 }
 
-table button {
-    width: 150px;
-    height: 150px;
-    font-size: 3em;
-}
-
-button {
-    width: 150px;
-    height: 50px;
-}
-
-@media (min-width:768px) {
-    table {
-        margin: 0 30vw 0 30vw;
-    }
-    #reset {
-        margin: 100px 0 0 30vw;
-    }
+.button:nth-of-type(3n) {
+    clear:both !important;
 }
