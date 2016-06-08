@@ -13,7 +13,7 @@
 <body>
   <md-grid-list md-cols="3" md-row-height="fit" style="height: 400px;">
     <md-grid-tile ng-repeat='i in [1,2,3,4,5,6,7,8,9]'>
-      <md-button class='box md-raised' ng-click='boxClick($event)' name='{{$index}}'ng-model='box[index]' aria-label='button' flex>{{box[$index]}}</md-button>
+       <md-button class='box md-raised' ng-click='boxClick($event)' name='{{$index}}' ng-model='box[index]' aria-label='button' flex>{{box[$index]}}</md-button>
     </md-grid-tile>
   </md-grid-list>
   <md-button class='md-raised' id='reset' ng-click='reset()'>Reset</md-button>
