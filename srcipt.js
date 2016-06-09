@@ -6,17 +6,24 @@ app.controller('MainCtrl', ['$scope', function($scope) {
 
     var p = "num"; // box number prefix
     var S = $scope;
-    // S.boxes = lp_initfillArray(-1, 9);
     S.box = new Array(9);
     S.thisPersonWon;
+    S.sideSymbol;
+    S.userClicks = 0; // use this to guard against infinite loop on a tie
+    
+    function selectThePlayerSymbol(yes) {
+        if (yes) return S.sideSymbol === "X" ? "X" : "O";
+        else     return S.sideSymbol === "X" ? "O" : "X";
+    }
 
     // select first box
-    var selectFirstBox = function() {
+    S.selectFirstBox = function(symbol) {
         var sel = Math.floor(Math.random() * 9);
         if (S.box[sel] === undefined) {
-            S.box[sel] = "O";
+            S.sideSymbol = symbol;
+            S.box[sel] = selectThePlayerSymbol(false);
         }
-    }; selectFirstBox();  // instantly call it
+    }
 
     S.checkWinners = function() {
         if (S.thisPersonWon === undefined || S.thisPersonWon === '') {
@@ -31,39 +38,50 @@ app.controller('MainCtrl', ['$scope', function($scope) {
                 [S.box[2], S.box[4], S.box[6]]
             ];
 
-            for ( var i = 0; i < allCombos.length; i++) {
+            for (var i = 0; i < allCombos.length; i++) {
                 var won = null;
-                if (allCombos[i].lp_allEqualTo('X'))      won = 'X';
-                else if (allCombos[i].lp_allEqualTo('O')) won = 'O'
+                if (allCombos[i].lp_allEqualTo(selectThePlayerSymbol(true)))  {
+                    won = selectThePlayerSymbol(true); 
+                    S.color = 'green';
+                }
+                else if (allCombos[i].lp_allEqualTo(selectThePlayerSymbol(false))) { 
+                    won = selectThePlayerSymbol(false);
+                    S.color = 'red';
+                }
                 if (won) {
                     S.thisPersonWon = won;
+                    S.userClicks = 0;
                     return true;
                 }
             }
             return false;
-        } else {
-            // someone alrady won
+        }
+        else {
+            // someone already won
             return true;
         }
     }
 
     S.boxClick = function(e) {
-        console.dir(e);
         e = e.srcElement;
+        S.userClicks++;
         if (!S.checkWinners()) { // don't do anything if someone won
             if (e.textContent === '') {
-                S.box[Number(e.name)] = 'X';
+                S.box[Number(e.name)] = selectThePlayerSymbol(true);
             }
 
-            if (!S.checkWinners()) { // if someone has't won, then let the computer choose, randomly
+            if (!S.checkWinners() && S.userClicks < 5) { // if someone has't won, then let the computer choose, randomly
                 while (true) {
                     var sel = Math.floor(Math.random() * 9);
                     if (S.box[sel] === '' || S.box[sel] === undefined) {
-                        S.box[sel] = 'O';
+                        S.box[sel] = selectThePlayerSymbol(false);
                         break;
                     }
                 }
                 S.checkWinners();
+            } else if (S.userClicks >= 4) {
+                S.thisPersonWon = 'Nobody';
+                S.userClicks = 0;
             }
         }
     }
@@ -71,7 +89,8 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     S.reset = function() {
         S.box = new Array(9);
         S.thisPersonWon = '';
-        selectFirstBox();
+        S.userClicks = 0
+        S.selectFirstBox(selectThePlayerSymbol(true));
     }
 
 }]);

@@ -1,26 +1,52 @@
 body,
-html,
-main,
-main > div{
+html {
     height: 100% !important;
     width: 100% !important;
-}
-
-span {
-    font-size: 3em;
+    font-size:100%;
 }
 
 .button:nth-of-type(3n) {
     clear:both !important;
 }
 
+.box {
+    height:100%;
+}
+
+.box, md-radio-group, p > span {
+    font-family: Handlee !important;
+    font-size: 3rem;
+}
+
+#reset, md-grid-list {
+    margin-top: 10%;
+}
+
+#links {
+    font-size: .7rem;
+}
+
+#result {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.green{
+    color:green;
+}
+
+.red {
+    color:red;
+}
+
+/*↓ from http://stackoverflow.com/questions/22424877/how-can-i-fade-in-and-out-the-visibility-of-a-div-using-ng-show-with-angularjs-1*/
 .fade.ng-hide {
   opacity: 0;
 }
 
 .fade.ng-hide-remove,
 .fade.ng-hide-add {
-  display: block !important;
+  /*display: inline !important;*/
 }
 
 .fade.ng-hide-remove {
