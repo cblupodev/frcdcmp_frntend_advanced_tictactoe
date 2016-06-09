@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial'])
+var app = angular.module('app', ['ngMaterial', 'ngAnimate'])
     .run(function($rootScope, $log) {
         $rootScope.$log = $log;
     })
@@ -10,46 +10,51 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     S.box = new Array(9);
     S.thisPersonWon;
 
-    // select first box    
+    // select first box
     var selectFirstBox = function() {
         var sel = Math.floor(Math.random() * 9);
         if (S.box[sel] === undefined) {
             S.box[sel] = "O";
         }
-    }; selectFirstBox(); // instantly call it
+    }; selectFirstBox();  // instantly call it
 
     S.checkWinners = function() {
-        var allCombos = [
-            [S.box[0], S.box[1], S.box[2]],
-            [S.box[3], S.box[4], S.box[5]],
-            [S.box[6], S.box[7], S.box[8]],
-            [S.box[0], S.box[3], S.box[6]],
-            [S.box[1], S.box[4], S.box[7]],
-            [S.box[2], S.box[5], S.box[8]],
-            [S.box[0], S.box[4], S.box[8]],
-            [S.box[2], S.box[4], S.box[6]]
-        ];
+        if (S.thisPersonWon === undefined || S.thisPersonWon === '') {
+            var allCombos = [
+                [S.box[0], S.box[1], S.box[2]],
+                [S.box[3], S.box[4], S.box[5]],
+                [S.box[6], S.box[7], S.box[8]],
+                [S.box[0], S.box[3], S.box[6]],
+                [S.box[1], S.box[4], S.box[7]],
+                [S.box[2], S.box[5], S.box[8]],
+                [S.box[0], S.box[4], S.box[8]],
+                [S.box[2], S.box[4], S.box[6]]
+            ];
 
-        allCombos.forEach(function(combo, i) {
-            var won = null;
-            if (combo.lp_allEqualTo('X')) won = 'X';
-            else if (combo.lp_allEqualTo('O')) won = 'O'
-            if (won) {
-                S.thisPersonWon = won;
-                return true;
+            for ( var i = 0; i < allCombos.length; i++) {
+                var won = null;
+                if (allCombos[i].lp_allEqualTo('X'))      won = 'X';
+                else if (allCombos[i].lp_allEqualTo('O')) won = 'O'
+                if (won) {
+                    S.thisPersonWon = won;
+                    return true;
+                }
             }
-        });
-        return false;
+            return false;
+        } else {
+            // someone alrady won
+            return true;
+        }
     }
 
     S.boxClick = function(e) {
         console.dir(e);
         e = e.srcElement;
-        if (S.thisPersonWon === undefined || S.thisPersonWon === '') { // don't do anything if someone won
+        if (!S.checkWinners()) { // don't do anything if someone won
             if (e.textContent === '') {
                 S.box[Number(e.name)] = 'X';
             }
-    
+
             if (!S.checkWinners()) { // if someone has't won, then let the computer choose, randomly
                 while (true) {
                     var sel = Math.floor(Math.random() * 9);
@@ -83,14 +88,6 @@ if (!String.prototype.lp_format) {
             return typeof args[number] != 'undefined' ? args[number] : match;
         });
     };
-}
-
-function lp_initfillArray(obj, length) {
-    var rtn = new Array(length);
-    for (var i = 0; i < length; i++) {
-        rtn[i] = obj;
-    }
-    return rtn;
 }
 
 if (!Array.lp_allEqualTo) {

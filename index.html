@@ -11,13 +11,18 @@
 </head>
 
 <body>
+  <md-radio-group ng-model="sideSymbol" ng-show='!sideSymbol' class='fade'>
+    <md-radio-button value="'X'" ng-disabled='sideSymbol'>X</md-radio-button>
+    <md-radio-button value="'O'" ng-disabled='sideSymbol'>O</md-radio-button>
+  </md-radio-group>
+  <!--<md-switch ng-model='sideSymbol' ng-true-value='"X"' ng-false-value='"O"' ng-disabled='sideSymbol'>You selected {{sideSymbol === undefined ? "-" : '"' + sideSymbol + '"'}}</md-switch>-->
   <md-grid-list md-cols="3" md-row-height="fit" style="height: 400px;">
     <md-grid-tile ng-repeat='i in [1,2,3,4,5,6,7,8,9]'>
-       <md-button class='box md-raised' ng-click='boxClick($event)' name='{{$index}}' ng-model='box[index]' aria-label='button' flex>{{box[$index]}}</md-button>
+      <md-button class='box md-raised' ng-disabled='thisPersonWon || !sideSymbol' ng-click='boxClick($event)' name='{{$index}}' ng-model='box[index]' aria-label='button' flex>{{box[$index]}}</md-button>
     </md-grid-tile>
   </md-grid-list>
   <md-button class='md-raised' id='reset' ng-click='reset()'>Reset</md-button>
-  <p ng-show='thisPersonWon'>{{thisPersonWon}} won</p>
+  <p ng-show='thisPersonWon'>{{thisPersonWon}} won. Reset to play again</p>
   <div id='links'>
     codepen project <a href='http://codepen.io/cblupodev/pen/waYdqo' target='_blank'> [buildatictactoegame - codepen.io]</a> freecodeamp assignment <a href='https://www.freecodecamp.com/challenges/build-a-tic-tac-toe-game' target='_blank'> [Build a Tic Tac Toe Game - freecodeamp.com]</a>
   </div>
