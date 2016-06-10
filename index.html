@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app='app' ng-cloak ng-view ng-controller='MainCtrl'>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -11,10 +11,7 @@
   <link href="style.css" media="screen" rel='stylesheet'>
 </head>
 
-<body>
-  <div id='links'>
-    codepen project <a href='http://codepen.io/cblupodev/pen/waYdqo' target='_blank'> [buildatictactoegame - codepen.io]</a> freecodeamp assignment <a href='https://www.freecodecamp.com/challenges/build-a-tic-tac-toe-game' target='_blank'> [Build a Tic Tac Toe Game - freecodeamp.com]</a>
-  </div>
+<body ng-app='app' ng-cloak ng-view ng-controller='MainCtrl'>
   <md-content layout='column' layout-padding flex-offset-gt-sm='20' flex-gt-sm='60' flex-offset-gt-lg='30' flex-gt-lg='40'>
     <div layout='column' layout-align='center center' layout-padding class='fade' ng-show='!sideSymbol' >
       <label>Choose your side</label>
@@ -23,9 +20,9 @@
         <md-radio-button value="'O'" ng-disabled='sideSymbol' ng-click='selectFirstBox("O")'>O</md-radio-button>
       </md-radio-group>
     </div>
-    <md-grid-list md-cols="3" md-row-height="fit" style="height: 400px;">
+    <md-grid-list md-cols="3" md-row-height="fit">
       <md-grid-tile ng-repeat='i in [1,2,3,4,5,6,7,8,9]'>
-        <md-button class='box md-raised'
+        <md-button class='box box{{$index}}'
                    ng-disabled='thisPersonWon || !sideSymbol'
                    ng-click='boxClick($event)'
                    name='{{$index}}'
@@ -37,6 +34,9 @@
     </md-grid-list>
     <md-button class='md-raised' id='reset' ng-click='reset()'>Reset</md-button>
     <p id='result' ng-show='thisPersonWon' class='fade'><span ng-class='color'>{{thisPersonWon}}</span> won. Reset to play again</p>
+  <div id='links'>
+    codepen project <a href='http://codepen.io/cblupodev/pen/waYdqo' target='_blank'> [buildatictactoegame - codepen.io]</a> freecodeamp assignment <a href='https://www.freecodecamp.com/challenges/build-a-tic-tac-toe-game' target='_blank'> [Build a Tic Tac Toe Game - freecodeamp.com]</a>
+  </div>
   </md-content>
 
   <!-- Angular Material requires Angular.js Libraries -->
@@ -46,8 +46,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-  <script src='state-machine.js'></script>
-  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
   <script src='srcipt.js'></script>
 </body>
 </html>

@@ -7,10 +7,12 @@ app.controller('MainCtrl', ['$scope', function($scope) {
     var p = "num"; // box number prefix
     var S = $scope;
     S.box = new Array(9);
-    S.thisPersonWon;
-    S.sideSymbol;
+    S.thisPersonWon; // symbol of the person who won
+    S.sideSymbol; // symbol of the player
     S.userClicks = 0; // use this to guard against infinite loop on a tie
+    S.color; // the color to display in the result
     
+    // return the player or enemies symbol
     function selectThePlayerSymbol(yes) {
         if (yes) return S.sideSymbol === "X" ? "X" : "O";
         else     return S.sideSymbol === "X" ? "O" : "X";
@@ -27,6 +29,8 @@ app.controller('MainCtrl', ['$scope', function($scope) {
 
     S.checkWinners = function() {
         if (S.thisPersonWon === undefined || S.thisPersonWon === '') {
+            
+            // array for all the possible winning combinations
             var allCombos = [
                 [S.box[0], S.box[1], S.box[2]],
                 [S.box[3], S.box[4], S.box[5]],

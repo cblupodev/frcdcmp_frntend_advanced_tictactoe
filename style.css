@@ -1,16 +1,38 @@
 body,
-html {
+html,
+md-content {
     height: 100% !important;
     width: 100% !important;
     font-size:100%;
 }
 
-.button:nth-of-type(3n) {
-    clear:both !important;
+md-radio-group {
+    margin-top: 3%;
 }
 
 .box {
+    margin:0;
+    border-radius: 0;
+}
+
+.box, md-grid-list {
     height:100%;
+}
+
+.box0, .box1, .box2 {
+    border-bottom: thin solid black;
+}
+
+.box3, .box4, .box5 {
+    border-bottom: thin solid black;
+}
+
+.box0, .box3, .box6 {
+    border-right: thin solid black;
+}
+
+.box2, .box5, .box8 {
+    border-left: thin solid black;
 }
 
 .box, md-radio-group, p > span {
@@ -19,7 +41,8 @@ html {
 }
 
 #reset, md-grid-list {
-    margin-top: 10%;
+    margin-top: 2%;
+    margin-bottom: 5%;
 }
 
 #links {
